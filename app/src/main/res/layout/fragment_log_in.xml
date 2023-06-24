@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.login.LogInFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/loginimg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="235dp"
+        android:background="@drawable/corner_top_40dp"
+        app:cardCornerRadius="@dimen/dp_40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTextDescriptionLogin"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/rubik_light"
+        android:text="Заполните поля, чтобы войти в аккаунт."
+        android:textAlignment="center"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTextTitleLogin" />
+
+    <TextView
+        android:id="@+id/tvTextTitleLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/rubik_regular"
+        android:text="Добро пожаловать в Drevmass"
+        android:textAlignment="center"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogoWelcomeSlider3"
+        app:lineHeight="@dimen/dp_22" />
+
+    <ImageView
+        android:id="@+id/tvLogoWelcomeSlider3"
+        android:layout_width="46dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:srcCompat="@drawable/drevmass_logo" />
+
+    <LinearLayout
+        android:id="@+id/editTextLinerLayout"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTextDescriptionLogin">
+
+        <TextView
+            android:id="@+id/tvHelperTextEmailLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите e-mail"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+        <EditText
+            android:id="@+id/tvEditTextEmailLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_email"
+            android:drawableLeft="@drawable/icon_email"
+            android:drawablePadding="@dimen/dp_10"
+
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите e-mail"
+
+
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+
+        <TextView
+            android:id="@+id/tvHelperTextPasswordLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите пароль"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+        <EditText
+            android:id="@+id/tvEditTextPasswordLogin"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:layout_marginTop="-9dp"
+            android:hint="Введите пароль"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50"/>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogIn"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/rubik_light"
+        android:text="Войти"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/background_50dp_woody_opacity"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegIn"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:layout_marginBottom="45dp"
+        android:background="@drawable/corner_radius_50dp"
+        android:fontFamily="@font/rubik_light"
+        android:text="Зарегистрироваться"
+        style="?android:attr/borderlessButtonStyle"
+        android:textAllCaps="false"
+        android:textColor="@color/woody"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintBottom_toTopOf="@+id/btnRecoverPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textForgetPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
+        android:text="Забыли пароль?"
+        android:textAlignment="viewEnd"
+        android:fontFamily="@font/rubik_light"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginEnd="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/btnRecoverPassword"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btnRecoverPassword"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:text="Восстановить"
+        android:textAlignment="viewStart"
+        android:fontFamily="@font/rubik_light"
+        android:textColor="@color/woody"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginStart="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="@+id/textForgetPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textForgetPassword"
+        app:layout_constraintTop_toTopOf="@+id/textForgetPassword" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:backgroundTint="@color/woody"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

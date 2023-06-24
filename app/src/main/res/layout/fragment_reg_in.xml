@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.regin.RegInFragment">
+
+
+    <TextView
+        android:id="@+id/tvTextDescriptionLogin"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/rubik_light"
+        android:text="Заполните поля, чтобы войти в аккаунт."
+        android:textAlignment="center"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTextTitleLogin" />
+
+    <TextView
+        android:id="@+id/tvTextTitleLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/rubik_regular"
+        android:text="Присоединяйтесь к нам!"
+        android:textAlignment="center"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogoWelcomeSlider3"
+        app:lineHeight="@dimen/dp_22" />
+
+    <ImageView
+        android:id="@+id/tvLogoWelcomeSlider3"
+        android:layout_width="46dp"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/drevmass_logo" />
+
+    <LinearLayout
+        android:id="@+id/editTextLinerLayout"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTextDescriptionLogin">
+        <TextView
+            android:id="@+id/tvHelperTextNameRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:fontFamily="@font/rubik_light"
+            android:text="Ваше имя"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextNameRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_profile"
+            android:drawableLeft="@drawable/icon_profile"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите e-mail"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+
+        <TextView
+            android:id="@+id/tvHelperTextEmailRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите e-mail"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextEmailRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_email"
+            android:drawableLeft="@drawable/icon_email"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите e-mail"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+
+        <TextView
+            android:id="@+id/tvHelperTextPasswordRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите пароль"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextPasswordRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите пароль"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+        <TextView
+            android:id="@+id/tvHelperTextREPasswordRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите пароль"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextREPasswordRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Повторите пароль"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegistration"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginHorizontal="@dimen/dp_40"
+        android:backgroundTint="@color/woody_opacity"
+        android:fontFamily="@font/rubik_light"
+        android:text="Продолжить"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="@drawable/background_50dp_woody_opacity"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLinerLayout" />
+
+    <TextView
+        android:id="@+id/textForgetPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="65dp"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:layout_marginBottom="36dp"
+        android:fontFamily="@font/rubik_light"
+        android:text="Есть аккаунт?"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/grey_black"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnBottomLogIn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/btnBottomLogIn"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_4"
+        android:fontFamily="@font/rubik_light"
+        android:text="Войти"
+        android:textAlignment="viewStart"
+        android:textColor="@color/woody"
+        android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toBottomOf="@+id/textForgetPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textForgetPassword"
+        app:layout_constraintTop_toTopOf="@+id/textForgetPassword" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

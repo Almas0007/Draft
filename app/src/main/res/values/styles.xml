@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="style_corner_radius_40dp">
+        <item name="cornerSize">40dp</item>
+    </style>
+    <style name="CustomDatePickerStyle"  parent="ThemeOverlay.AppCompat.Dialog">
+        <!-- Измените цвет фона -->
+        <item name="android:background">@color/woody_opacity</item>
+
+        <!-- Измените цвет текста даты -->
+        <item name="android:textColorPrimary">@color/grey_black</item>
+
+        <!-- Измените цвет заголовка -->
+        <item name="android:textColorPrimaryInverse">@color/woody</item>
+
+        <!-- Измените цвет кнопок -->
+        <item name="android:colorControlNormal">@color/grey_50</item>
+
+        <!-- Измените цвет выделения даты -->
+        <item name="colorAccent">@color/woody_opacity</item>
+    </style>
+</resources>

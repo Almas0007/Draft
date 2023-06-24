@@ -1,0 +1,57 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Drevmass_app" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+
+    <style name="CustomTimePickerDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <!-- Цвет фона диалога -->
+        <item name="android:windowBackground">@color/woody_opacity</item>
+        <!-- Цвет текста времени -->
+        <item name="android:textColorPrimary">@color/grey_50</item>
+        <!-- Цвет кнопки "OK" -->
+        <item name="colorPrimary">@color/woody</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Цвет кнопки "Cancel" -->
+        <item name="colorSecondary">@color/grey_black</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Цвет заголовка диалога -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Цвет фона диалогового окна -->
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorAccent">@color/grey_50</item>
+
+    </style>
+
+    <style name="MaterialDatePickerTheme" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+
+            <!-- Цвет фона календаря -->
+            <item name="android:textColor">@color/woody_opacity</item>
+            <item name="itemTextColor">@color/grey_black</item>
+            <item name="android:subtitleTextColor">@color/grey_black</item>
+            <item name="materialCalendarStyle">@style/MaterialDatePicker.CalendarStyle</item>
+            <!-- Цвет текста в календаре -->
+            <item name="android:textColorSecondary">@color/grey_black</item>
+            <!-- Цвет кнопки "ОК" -->
+            <item name="colorPrimary">@color/woody</item>
+            <item name="colorOnPrimary">@color/white</item>
+
+            <!-- Цвет кнопки "Отмена" -->
+            <item name="colorSecondary">@color/grey_black</item>
+            <item name="colorOnSecondary">@color/white</item>
+            <!-- Цвет заголовка диалога -->
+            <item name="android:textColorPrimary">@color/black</item>
+            <item name="colorAccent">@color/grey_50</item>
+
+        </style>
+    <style name="MaterialDatePicker.CalendarStyle" parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="android:background">@color/white</item>
+        <item name="itemTextColor">@color/black</item>
+        <item name="actionMenuTextColor">@color/woody</item>
+    </style>
+</resources>

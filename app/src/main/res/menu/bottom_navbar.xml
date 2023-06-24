@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_navbar"
+    app:labelVisibilityMode="unlabeled">
+    <item
+        android:id="@+id/productFragment"
+        android:icon="@drawable/selector_nav_product"
+        android:title="Товары" />
+    <item
+        android:id="@+id/lessonsFragment"
+        android:icon="@drawable/selector_nav_lessons"
+        android:title="Уроки" />
+
+    <item
+        android:id="@+id/favoriteFragment"
+        android:icon="@drawable/selector_nav_favorite"
+        android:title="Избранное" />
+
+</menu>
