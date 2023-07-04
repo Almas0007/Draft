@@ -1,11 +1,17 @@
 package kz.mobydev.drevmass.api
 
+import kz.mobydev.drevmass.model.day.DaysPostRequest
 import kz.mobydev.drevmass.model.Lesson
 import kz.mobydev.drevmass.model.Logout
+import kz.mobydev.drevmass.model.MessageResetPassword
+import kz.mobydev.drevmass.model.Products
+import kz.mobydev.drevmass.model.StatusModel
+import kz.mobydev.drevmass.model.Support
 import kz.mobydev.drevmass.model.User
 import kz.mobydev.drevmass.model.UserInfoGet
 import kz.mobydev.drevmass.model.UserInfoPostRequest
 import kz.mobydev.drevmass.model.UserInfoPostResponse
+import kz.mobydev.drevmass.model.day.DayPostResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -63,5 +69,44 @@ interface ApiService {
         @Path("id") id: Int
     ): Lesson
 
+    @GET(PRODUCTS_GET)
+    suspend fun getProducts(
+        @Header("Authorization") token: String
+    ): Products
+
+    @GET("$PRODUCTS_GET/{id}")
+    suspend fun getProductById(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Products.ProductsItem
+
+    @POST(FAVORITE)
+    suspend fun actionFavorite(
+        @Header("Authorization") token: String,
+        @Query("lesson_id") lesson_id: Int,
+        @Query("action") action: String
+    ):StatusModel
+
+    @GET(FAVORITE)
+    suspend fun getFavorite(
+        @Header("Authorization") token: String
+    ):List<Lesson>
+
+    @POST(SUPPORTS)
+    suspend fun supportMessage(
+        @Header("Authorization") token: String,
+        @Query("problem_description") problem_description: String
+    ):Support
+
+    @POST(DAYS)
+    suspend fun setDays(
+        @Header("Authorization") token: String,
+        @Body day: DaysPostRequest
+    ):DayPostResponse
+
+    @POST(RESET_PASSWORD)
+    suspend fun forgetPassword(
+        @Query("email") email: String
+    ):MessageResetPassword
 
 }

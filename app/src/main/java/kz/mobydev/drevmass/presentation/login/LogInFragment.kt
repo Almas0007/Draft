@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,14 +18,15 @@ import kz.mobydev.drevmass.App
 import kz.mobydev.drevmass.R
 import kz.mobydev.drevmass.data.preferences.PreferencesDataSource
 import kz.mobydev.drevmass.databinding.FragmentLogInBinding
+import kz.mobydev.drevmass.utils.ErrorEmailDialogFragment
 import kz.mobydev.drevmass.utils.onChange
 import kz.mobydev.drevmass.utils.provideNavigationHost
+import kz.mobydev.drevmass.utils.showCustomToast
 import kz.mobydev.drevmass.utils.toast
 import kz.mobydev.drevmass.utils.viewModelProvider
 
 
 class LogInFragment : Fragment() {
-
     private val appComponents by lazy { App.appComponents }
 
     @Inject
@@ -39,6 +41,8 @@ class LogInFragment : Fragment() {
 
     private lateinit var binding: FragmentLogInBinding
 
+    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +55,7 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         buttonSendChangeBackgrounds()
+        validation()
         var login: String = ""
         var password: String = ""
         binding.apply {
@@ -63,9 +68,55 @@ class LogInFragment : Fragment() {
         binding.btnRegIn.setOnClickListener {
             findNavController().navigate(R.id.action_logInFragment_to_regInFragment)
         }
+        binding.btnRecoverPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_logInFragment_to_resetPasswordFragment)
+        }
 
     }
+    private fun validation(){
 
+        binding.tvEditTextEmailLogin.onChange {
+            if (it.trim().matches(emailPattern.toRegex())) {
+                binding.tvHelperTextEmailLogin.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+            } else {
+                binding.tvHelperTextEmailLogin.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+            }
+        }
+        binding.tvEditTextPasswordLogin.onChange {
+            if (it == "") {
+                binding.tvHelperTextPasswordLogin.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+            } else if (it.length < 7) {
+                binding.tvHelperTextPasswordLogin.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+            } else {
+                binding.tvHelperTextPasswordLogin.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+            }
+        }
+    }
     private fun buttonSendChangeBackgrounds() {
         binding.apply {
             this.tvEditTextEmailLogin.onChange { login ->
@@ -85,55 +136,16 @@ class LogInFragment : Fragment() {
             }
         }
     }
-
     private fun initViews(login: String, password: String) {
         getViewModel().validationInputValue(login, password)
-
-        getViewModel().errorMessageLogin.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextEmailLogin.setTextColor(Color.RED)
-                binding.tvEditTextEmailLogin.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_email_error),
-                    null,
-                    null,
-                    null
-                )
-            } else {
-                binding.tvHelperTextEmailLogin.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextEmailLogin.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_email),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
-        getViewModel().errorMessagePassword.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextPasswordLogin.setTextColor(Color.RED)
-                binding.tvEditTextPasswordLogin.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password_error),
-                    null,
-                    null,
-                    null
-                )
-            } else {
-                binding.tvHelperTextPasswordLogin.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextPasswordLogin.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
         getViewModel().login.observe(viewLifecycleOwner, Observer {
             shared.setToken(binding.tvEditTextPasswordLogin.toString())
             shared.setToken(it.accessToken)
             findNavController().navigate(R.id.action_logInFragment_to_productFragment)
         })
         getViewModel().errorMessage.observe(viewLifecycleOwner, Observer {
-            requireContext().toast(it)
+            val dialogFragment = ErrorEmailDialogFragment()
+            dialogFragment.show(childFragmentManager, "ErrorEmailDialogFragment")
         })
     }
 

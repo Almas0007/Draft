@@ -10,7 +10,8 @@
     <item
         android:id="@+id/lessonsFragment"
         android:icon="@drawable/selector_nav_lessons"
-        android:title="Уроки" />
+        android:title="Уроки"
+        android:checked="true"/>
 
     <item
         android:id="@+id/favoriteFragment"

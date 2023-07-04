@@ -84,5 +84,6 @@
 
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_17">17dp</dimen>
+    <dimen name="toolbar_margin_end">80dp</dimen>
 
 </resources>

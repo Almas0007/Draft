@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.profile.user.UserFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Мои данные"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/grey_black"
+        android:layout_marginTop="110dp"
+        android:layout_marginHorizontal="@dimen/dp_24"
+        android:fontFamily="@font/rubik_regular"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <LinearLayout
+        android:id="@+id/editTextLinerLayout"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="40dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text1">
+        <TextView
+            android:id="@+id/tvHelperTextNameRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:fontFamily="@font/rubik_light"
+            android:text="Ваше имя"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextNameRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_profile"
+            android:drawableLeft="@drawable/icon_profile"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите свое имя"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+
+        <TextView
+            android:id="@+id/tvHelperTextEmailRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите e-mail"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextEmailRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_email"
+            android:drawableLeft="@drawable/icon_email"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите e-mail"
+            android:includeFontPadding="false"
+            android:inputType="textEmailAddress"
+            android:lineBreakStyle="loose"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+
+        <TextView
+            android:id="@+id/tvHelperTextPasswordRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите пароль"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextPasswordRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Введите пароль"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+        <TextView
+            android:id="@+id/tvHelperTextREPasswordRegIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_3"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Введите пароль"
+            android:textColor="@color/grey_200"
+            android:textSize="@dimen/dp_14" />
+
+        <EditText
+            android:id="@+id/tvEditTextREPasswordRegIn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="-9dp"
+            android:backgroundTint="@color/woody"
+            android:drawableStart="@drawable/icon_password"
+            android:drawableLeft="@drawable/icon_password"
+            android:drawablePadding="@dimen/dp_10"
+
+            android:fontFamily="@font/rubik_light"
+            android:hint="Повторите пароль"
+            android:includeFontPadding="false"
+            android:inputType="textPassword"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Анкетирование"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/grey_black"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginHorizontal="@dimen/dp_24"
+        android:fontFamily="@font/rubik_regular"
+        app:layout_constraintTop_toBottomOf="@id/editTextLinerLayout"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/firstInfoPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:paddingBottom="@dimen/dp_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text2">
+
+        <TextView
+            android:id="@+id/textMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Пол"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMan"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/background_50dp_grey_50"
+            android:fontFamily="@font/rubik_light"
+            android:gravity="center"
+            android:text="Мужской"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toStartOf="@+id/btnWoman"
+            app:layout_constraintStart_toStartOf="@+id/textMale"
+            app:layout_constraintTop_toBottomOf="@+id/textMale" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWoman"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/background_50dp_grey_50"
+            android:fontFamily="@font/rubik_light"
+            android:gravity="center"
+            android:text="Женский"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnMan"
+            app:layout_constraintTop_toTopOf="@+id/btnMan" />
+
+        <TextView
+            android:id="@+id/textHeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Рост"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toStartOf="@+id/textMale"
+            app:layout_constraintTop_toBottomOf="@+id/btnMan" />
+
+        <TextView
+            android:id="@+id/textSM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
+            android:text="см"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/textHeight"
+            app:layout_constraintEnd_toEndOf="@+id/btnWoman"
+            app:layout_constraintTop_toTopOf="@+id/textHeight" />
+
+        <EditText
+            android:id="@+id/tvEditTextHeight"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:background="#00FFFFFF"
+            android:ems="10"
+            android:fontFamily="@font/rubik_light"
+            android:hint="Укажите рост"
+            android:inputType="numberDecimal"
+            android:paddingVertical="@dimen/dp_2"
+            android:textAlignment="textEnd"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/textHeight"
+            app:layout_constraintEnd_toStartOf="@+id/textSM"
+            app:layout_constraintStart_toEndOf="@+id/textHeight"
+            app:layout_constraintTop_toTopOf="@+id/textHeight" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginTop="16dp"
+            android:background="@color/woody"
+            app:layout_constraintEnd_toEndOf="@+id/btnWoman"
+            app:layout_constraintStart_toStartOf="@+id/textMale"
+            app:layout_constraintTop_toBottomOf="@+id/tvEditTextHeight" />
+
+        <TextView
+            android:id="@+id/textWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/rubik_light"
+            android:text="Вес"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintStart_toStartOf="@+id/textHeight"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <EditText
+            android:id="@+id/tvEditTextWeight"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="3dp"
+            android:background="#00FFFFFF"
+            android:ems="10"
+            android:fontFamily="@font/rubik_light"
+            android:hint="Укажите вес"
+            android:inputType="numberDecimal"
+            android:paddingVertical="@dimen/dp_2"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/grey_black"
+            android:textColorHint="@color/grey_50"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/textWeight"
+            app:layout_constraintEnd_toStartOf="@+id/textKG"
+            app:layout_constraintStart_toEndOf="@+id/textWeight"
+            app:layout_constraintTop_toTopOf="@+id/textWeight" />
+
+        <TextView
+            android:id="@+id/textKG"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/rubik_light"
+            android:text="кг"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintBottom_toBottomOf="@+id/textWeight"
+            app:layout_constraintEnd_toEndOf="@+id/textSM"
+            app:layout_constraintTop_toTopOf="@+id/textWeight" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginTop="16dp"
+            android:background="@color/woody"
+            app:layout_constraintEnd_toEndOf="@+id/textKG"
+            app:layout_constraintStart_toStartOf="@+id/textWeight"
+            app:layout_constraintTop_toBottomOf="@+id/textWeight" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_2"
+            android:layout_marginTop="16dp"
+            android:background="@color/woody"
+            app:layout_constraintEnd_toEndOf="@+id/btnSelectCalendar"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Дата рождения"
+            android:fontFamily="@font/rubik_light"
+            android:textColor="@color/grey_black"
+            app:layout_constraintStart_toStartOf="@+id/textWeight"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/btnSelectCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30.04.2023"
+            android:textColor="@color/grey_black"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="@+id/view3"
+            app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Ваша активность"
+            android:textColor="@color/grey_black"
+            android:fontFamily="@font/rubik_light"
+            android:textSize="@dimen/dp_18"
+            app:layout_constraintStart_toStartOf="@+id/view4"
+            app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHigh"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/background_50dp_grey_50"
+            android:fontFamily="@font/rubik_light"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_2"
+            android:text="Высокая"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_14"
+            android:layout_marginBottom="@dimen/dp_6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnMedium"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMedium"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/background_50dp_grey_50"
+            android:fontFamily="@font/rubik_light"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_2"
+            android:text="Средняя"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@+id/btnHigh"
+            app:layout_constraintEnd_toStartOf="@+id/btnLow"
+            app:layout_constraintStart_toEndOf="@+id/btnHigh"
+            app:layout_constraintTop_toTopOf="@+id/btnHigh" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLow"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:background="@drawable/background_50dp_grey_50"
+            android:fontFamily="@font/rubik_light"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp_2"
+            android:text="Низкая"
+            android:textAllCaps="false"
+            android:textColor="@color/grey_black"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMedium"
+            app:layout_constraintEnd_toEndOf="@+id/view4"
+            app:layout_constraintStart_toEndOf="@+id/btnMedium"
+            app:layout_constraintTop_toTopOf="@+id/btnMedium" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/btnDeleteAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Удалить аккаунт"
+            android:textSize="@dimen/sp_18"
+            android:textColor="@color/red"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginHorizontal="@dimen/dp_24"
+            android:fontFamily="@font/rubik_regular"
+            android:layout_marginBottom="@dimen/dp_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstInfoPage"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

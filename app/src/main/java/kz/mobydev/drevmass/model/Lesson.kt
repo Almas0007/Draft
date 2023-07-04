@@ -23,5 +23,7 @@ data class Lesson(
     @SerializedName("updated_at")
     val updatedAt: String, // 2023-06-06T09:39:16.000000Z
     @SerializedName("video_src")
-    val videoSrc: String // https://www.youtube.com/embed/IUN664s7N-c
+    val videoSrc: String, // https://www.youtube.com/embed/IUN664s7N-c
+    @SerializedName("favorite")
+    val favorite: Int // false
 )

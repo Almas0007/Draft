@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:backgroundTint="@color/grey_300"
+    tools:context=".presentation.product.about.AboutProductFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgProduct"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="centerCrop"
+        android:background="@color/grey_50"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="-50dp"
+            android:background="@drawable/background_40dp_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgProduct"
+            app:layout_constraintVertical_bias="0.677">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:fontFamily="@font/rubik_regular"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22"
+                app:layout_constraintEnd_toEndOf="@+id/tvPrice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginEnd="@dimen/dp_10" />
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/rubik_regular"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_22"
+                app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+
+            <ImageView
+                android:id="@+id/imgVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:src="@drawable/icon_volume"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:fontFamily="@font/rubik_light"
+                android:text=""
+                android:textColor="@color/woody"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintBottom_toBottomOf="@id/imgVolume"
+                app:layout_constraintStart_toEndOf="@id/imgVolume"
+                app:layout_constraintTop_toTopOf="@id/imgVolume" />
+
+            <ImageView
+                android:id="@+id/imgWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_40"
+                android:src="@drawable/ic_weight"
+                app:layout_constraintBottom_toBottomOf="@+id/imgVolume"
+                app:layout_constraintStart_toEndOf="@+id/tvVolume"
+                app:layout_constraintTop_toTopOf="@+id/imgVolume" />
+
+            <TextView
+                android:id="@+id/tvWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/rubik_light"
+                android:text=""
+                android:textColor="@color/woody"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintBottom_toBottomOf="@+id/imgWeight"
+                app:layout_constraintStart_toEndOf="@+id/imgWeight"
+                app:layout_constraintTop_toTopOf="@+id/imgWeight" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_17"
+                android:fontFamily="@font/rubik_light"
+                android:text=""
+                android:textColor="@color/grey_black"
+                android:textSize="@dimen/sp_18"
+                app:layout_constraintEnd_toEndOf="@+id/tvPrice"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@id/tvWeight" />
+
+            <TextView
+                android:id="@+id/tvFullDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_17"
+                android:fontFamily="@font/rubik_light"
+                android:text=""
+                android:textColor="@color/grey_300"
+                android:textSize="@dimen/sp_16"
+                app:layout_constraintEnd_toEndOf="@+id/tvPrice"
+                app:layout_constraintStart_toStartOf="@+id/tvTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTutorial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="  Как использовать?"
+            android:drawableStart="@drawable/ic_play_white"
+            android:background="@drawable/corner_radius_40dp"
+            android:backgroundTint="@color/woody"
+            android:fontFamily="@font/rubik_light"
+            android:textAllCaps="false"
+            android:layout_marginBottom="14dp"
+            android:textSize="@dimen/sp_18"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

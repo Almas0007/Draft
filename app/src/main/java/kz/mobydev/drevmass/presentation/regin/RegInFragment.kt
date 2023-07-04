@@ -1,7 +1,9 @@
 package kz.mobydev.drevmass.presentation.regin
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +20,10 @@ import kz.mobydev.drevmass.data.preferences.PreferencesDataSource
 import kz.mobydev.drevmass.databinding.FragmentLogInBinding
 import kz.mobydev.drevmass.databinding.FragmentRegInBinding
 import kz.mobydev.drevmass.presentation.login.LoginViewModel
+import kz.mobydev.drevmass.utils.ErrorEmailDialogFragment
 import kz.mobydev.drevmass.utils.onChange
 import kz.mobydev.drevmass.utils.provideNavigationHost
+import kz.mobydev.drevmass.utils.showCustomToast
 import kz.mobydev.drevmass.utils.toast
 import kz.mobydev.drevmass.utils.viewModelProvider
 
@@ -48,143 +52,206 @@ class RegInFragment : Fragment() {
         return binding.root
     }
 
+    private var okName: Boolean = false
+    private var okEmail: Boolean = false
+    private var okPassword: Boolean = false
+    private var okConfirmPassword: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        buttonSendChangeBackgrounds()
-        Toast.makeText(requireContext(), shared.getToken(), Toast.LENGTH_SHORT).show()
+        new()
         var name: String = ""
         var login: String = ""
         var password: String = ""
         var password_confirmation: String = ""
         binding.apply {
             this.btnRegistration.setOnClickListener {
-                name = this.tvEditTextNameRegIn.text.toString()
-                login = this.tvEditTextEmailRegIn.text.toString()
-                password = this.tvEditTextPasswordRegIn.text.toString()
-                password_confirmation = this.tvEditTextREPasswordRegIn.text.toString()
-                initViews(name, login, password, password_confirmation)
+                Log.d("TAG", "$okName $okEmail $okPassword $okConfirmPassword")
+                Log.d(
+                    "TAG",
+                    "Result: $selectName $selectEmail $selectPassword $selectConfirmPassword"
+                )
+                if (okName && okEmail && okPassword && okConfirmPassword) {
+                    name = selectName
+                    login = selectEmail
+                    password = selectPassword
+                    password_confirmation = selectConfirmPassword
+                    shared.setPassword(password)
+                    shared.setEmail(login)
+                    shared.setName(name)
+                    getViewModel().regInUser(name, login, password, password_confirmation)
+                    getViewModel().login.observe(viewLifecycleOwner) { user ->
+                        Log.d("TAG", "Result: $user")
+                        shared.setToken(user.accessToken)
+                        findNavController().navigate(R.id.infoFragment)
+                    }
+                    getViewModel().errorMessage.observe(viewLifecycleOwner) { error ->
+                        Toast(appComponents.context()).showCustomToast(
+                            "Ошибка при отправке, попробуйте снова!",
+                            appComponents.context(),
+                            this@RegInFragment
+                        )
+                        val dialogFragment = ErrorEmailDialogFragment()
+                        dialogFragment.show(childFragmentManager, "ErrorEmailDialogFragment")
+                    }
+                }
             }
-            this.btnBottomLogIn.setOnClickListener{
+
+            this.btnBottomLogIn.setOnClickListener {
                 findNavController().navigate(R.id.action_regInFragment_to_logInFragment)
             }
         }
 
     }
 
-    fun initViews(name:String,email:String,password:String,password_confirmation:String){
-        getViewModel().validationInputValue(name, email, password, password_confirmation)
+    private var selectName = ""
+    private var selectEmail = ""
+    private var selectPassword = ""
+    private var selectConfirmPassword = ""
+    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+    private fun new() {
+        binding.tvEditTextNameRegIn.onChange {
+            selectName = it
+            if (it.length > 1) {
+                binding.tvHelperTextNameRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+                okName = true
+                if (okName && okEmail && okPassword && okConfirmPassword) {
+                    binding.btnRegistration.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.background_50dp_woody
+                    )
+                }
+            } else {
+                binding.tvHelperTextNameRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+                okName = false
+            }
+        }
+        binding.tvEditTextEmailRegIn.onChange {
+            selectEmail = it
+            if (it.trim().matches(emailPattern.toRegex())) {
+                binding.tvHelperTextEmailRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+                okEmail = true
+                if (okName && okEmail && okPassword && okConfirmPassword) {
+                    binding.btnRegistration.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.background_50dp_woody
+                    )
+                }
+            } else {
+                binding.tvHelperTextEmailRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+                okEmail = false
+            }
+        }
+        binding.tvEditTextPasswordRegIn.onChange {
+            if (it == "") {
+                binding.tvHelperTextPasswordRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+            } else if (it.length < 2) {
+                Toast(appComponents.context()).showCustomToast(
+                    "Пароль должен быть не менее 8 символов",
+                    appComponents.context(),
+                    this@RegInFragment
+                )
+            } else if (it.length < 7) {
+                binding.tvHelperTextPasswordRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.red
+                    )
+                )
+            } else {
+                binding.tvHelperTextPasswordRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
+                )
+                selectPassword = it
+                okPassword = true
 
-        getViewModel().errorMessageName.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextNameRegIn.setTextColor(Color.RED)
-                binding.tvEditTextNameRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_profile_error),
-                    null,
-                    null,
-                    null
+                if (okName && okEmail && okPassword && okConfirmPassword) {
+                    binding.btnRegistration.background = ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.background_50dp_woody
+                    )
+                }
+            }
+        }
+        binding.tvEditTextREPasswordRegIn.onChange {
+            if (it == "" && selectPassword == shared.getPassword()) {
+                binding.tvHelperTextREPasswordRegIn.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey_200
+                    )
                 )
             } else {
-                binding.tvHelperTextNameRegIn.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextNameRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_profile),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
-        getViewModel().errorMessageEmail.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextEmailRegIn.setTextColor(Color.RED)
-                binding.tvEditTextEmailRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_email_error),
-                    null,
-                    null,
-                    null
-                )
-            } else {
-                binding.tvHelperTextEmailRegIn.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextEmailRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_email),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
-        getViewModel().errorMessagePassword.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextPasswordRegIn.setTextColor(Color.RED)
-                binding.tvEditTextPasswordRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password_error),
-                    null,
-                    null,
-                    null
-                )
-            } else {
-                binding.tvHelperTextPasswordRegIn.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextPasswordRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
-        getViewModel().errorMessageConfirmPassword.observe(viewLifecycleOwner, Observer {
-            if (!it) {
-                binding.tvHelperTextPasswordRegIn.setTextColor(Color.RED)
-                binding.tvEditTextPasswordRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password_error),
-                    null,
-                    null,
-                    null
-                )
-            } else {
-                binding.tvHelperTextPasswordRegIn.setTextColor(resources.getColor(R.color.grey_200))
-                binding.tvEditTextPasswordRegIn.setCompoundDrawablesWithIntrinsicBounds(
-                    ContextCompat.getDrawable(requireContext(), R.drawable.icon_password),
-                    null,
-                    null,
-                    null
-                )
-            }
-        })
-        getViewModel().login.observe(viewLifecycleOwner, Observer {
-            shared.setPassword(password)
-            shared.setToken(it.accessToken)
-            shared.setEmail(email)
-            shared.setName(name)
-            Toast.makeText(requireContext(), shared.getToken(), Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.infoFragment)
-        })
-        getViewModel().errorMessage.observe(viewLifecycleOwner, Observer {
-            requireContext().toast(it)
-        })
-    }
-    private fun buttonSendChangeBackgrounds() {
-        binding.apply {
-            this.tvEditTextNameRegIn.onChange { name ->
-                this.tvEditTextEmailRegIn.onChange { login ->
-                    this.tvEditTextPasswordRegIn.onChange { password ->
-                        this.tvEditTextREPasswordRegIn.onChange { password_confirmation->
-                            if (name.isNotEmpty() && login.isNotEmpty() && password.isNotEmpty()&&password_confirmation.isNotEmpty()) {
-                                binding.btnRegistration.background = ContextCompat.getDrawable(
-                                    requireContext(),
-                                    R.drawable.background_50dp_woody
-                                )
-                            } else {
-                                binding.btnRegistration.background = ContextCompat.getDrawable(
-                                    requireContext(),
-                                    R.drawable.background_50dp_woody_opacity
-                                )
-                            }
-                        }
+                if (it.length < 2) {
+                    Toast(appComponents.context()).showCustomToast(
+                        "Пароль должен быть не менее 8 символов",
+                        appComponents.context(),
+                        this@RegInFragment
+                    )
+                } else if (it.length < 7) {
+                    binding.tvHelperTextREPasswordRegIn.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.red
+                        )
+                    )
+                } else if (it != selectPassword) {
+                    Toast(appComponents.context()).showCustomToast(
+                        "Пароли должны совподать",
+                        appComponents.context(),
+                        this@RegInFragment
+                    )
+                    okConfirmPassword = false
+                } else {
+                    selectConfirmPassword = it
+                    binding.tvHelperTextREPasswordRegIn.setTextColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.grey_200
+                        )
+                    )
+                    okConfirmPassword = true
+                    if (okName && okEmail && okPassword && okConfirmPassword) {
+                        binding.btnRegistration.background = ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.background_50dp_woody
+                        )
                     }
                 }
             }
         }
+
     }
+
+
     override fun onResume() {
         super.onResume()
         provideNavigationHost()?.apply {

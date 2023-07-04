@@ -82,7 +82,7 @@
             android:drawablePadding="@dimen/dp_10"
 
             android:fontFamily="@font/rubik_light"
-            android:hint="Введите e-mail"
+            android:hint="Введите имя"
             android:includeFontPadding="false"
             android:inputType="textEmailAddress"
             android:lineBreakStyle="loose"
@@ -175,15 +175,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegistration"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_56"
-        android:layout_marginTop="@dimen/dp_32"
         android:layout_marginHorizontal="@dimen/dp_40"
-        android:backgroundTint="@color/woody_opacity"
+        android:layout_marginTop="@dimen/dp_32"
+        android:background="@drawable/background_50dp_woody_opacity"
         android:fontFamily="@font/rubik_light"
         android:text="Продолжить"
-        style="?android:attr/borderlessButtonStyle"
-        android:background="@drawable/background_50dp_woody_opacity"
         android:textColor="@color/white"
         android:textSize="@dimen/sp_16"
         app:layout_constraintEnd_toEndOf="parent"

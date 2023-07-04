@@ -11,27 +11,27 @@ import kz.mobydev.drevmass.model.Lesson
 class RoomDataConverter : Serializable {
 
     @TypeConverter
-    fun stringFromObject(list: Lesson?): String? {
+    fun stringFromObject(list: Any?): String? {
         val gson = Gson()
         return gson.toJson(list)
     }
 
     @TypeConverter
-    fun getObjectFromString(jsonString: String?): Lesson? {
-        val listType: Type = object : TypeToken<Lesson?>() {}.type
+    fun getObjectFromString(jsonString: String?): Any? {
+        val listType: Type = object : TypeToken<Any?>() {}.type
         return Gson().fromJson(jsonString, listType)
     }
 
 
     @TypeConverter
-    fun stringFromListObject(list: List<Lesson?>?): String? {
+    fun stringFromListObject(list: List<Any?>?): String? {
         val gson = Gson()
         return gson.toJson(list)
     }
 
     @TypeConverter
-    fun getListObjectFromString(jsonString: String?): List<Lesson?>? {
-        val listType: Type = object : TypeToken<ArrayList<Lesson?>?>() {}.type
+    fun getListObjectFromString(jsonString: String?): List<Any?>? {
+        val listType: Type = object : TypeToken<ArrayList<Any?>?>() {}.type
         return Gson().fromJson(jsonString, listType)
     }
 }

@@ -12,6 +12,8 @@ import kz.mobydev.drevmass.model.UserInfoGet
 import kz.mobydev.drevmass.model.UserInfoPostRequest
 import kz.mobydev.drevmass.model.UserInfoPostResponse
 import kz.mobydev.drevmass.model.common.ResultData
+import kz.mobydev.drevmass.model.day.DayPostResponse
+import kz.mobydev.drevmass.model.day.DaysPostRequest
 import kz.mobydev.drevmass.repository.AppRepositoryImpl
 
 
@@ -29,81 +31,76 @@ class InfoViewModel @Inject constructor(
     private var _login = MutableLiveData<Boolean>()
     val login: LiveData<Boolean> = _login
 
-    var selectActivity = MutableLiveData<Int>()
-
-    var selectMale = MutableLiveData<Boolean>()
-
-    var selectHeight = MutableLiveData<Int>()
-
-    var selectWeight = MutableLiveData<Double>()
-
-    var selectBirthDay = MutableLiveData<String>()
-
-    var selectTime = MutableLiveData<String>()
-
-    var selectDay = MutableLiveData<List<Boolean>>()
-
-    var DayPn = MutableLiveData<Boolean>()
-    var DayVt = MutableLiveData<Boolean>()
-    var DaySr = MutableLiveData<Boolean>()
-    var DayCht = MutableLiveData<Boolean>()
-    var DayPt = MutableLiveData<Boolean>()
-    var DaySb = MutableLiveData<Boolean>()
-    var DayVs = MutableLiveData<Boolean>()
-
-    var selectDayList = MutableLiveData<List<Boolean>>()
+    private var _user = MutableLiveData<UserInfoGet>()
+    var user :LiveData<UserInfoGet> = _user
 
     private var _errorMessage = MutableLiveData<String>()
     var errorMessage: LiveData<String> = _errorMessage
 
-    fun getDayList(): LiveData<List<Boolean>> {
-        val list = listOf<Boolean>(
-            DayPn.value?:false,
-            DayVt.value?:false,
-            DaySr.value?:false,
-            DayCht.value?:false,
-            DayPt.value?:false,
-            DaySb.value?:false,
-            DayVs.value?:false
-        )
-        selectDayList.postValue(list)
-        return selectDayList
-    }
+
+    private var _day = MutableLiveData<DayPostResponse>()
+    var day :LiveData<DayPostResponse> = _day
+
+    private var _userPostResponse = MutableLiveData<UserInfoPostResponse>()
+    var userInfoResponse: LiveData<UserInfoPostResponse> = _userPostResponse
 
 
-
-
-    fun updateUserInfo(token: String, name:String, email: String, password:String) {
-        val userRequest = UserInfoPostRequest(
-            name = name,
-            email = email,
-            password = password,
-            passwordConfirmation = password,
-            information = UserInfoPostRequest.Information(
-                activity = selectActivity.value?:0,
-                birth = selectBirthDay.value?:"2000-01-01",
-                gender = selectMale.value?:true ,
-                height = selectHeight.value?:0,
-                weight = selectWeight.value?:0.0,
-            )
-        )
+    fun setNotification(token: String, day: DaysPostRequest){
         viewModelScope.launch {
             try {
-                when (val response = repositoryImpl.updateUserInformationApi(token, userRequest) ) {
-                    is ResultData.Success -> {
-                        _userInfoAfterUpdate.postValue(response.data)
-                        _login.postValue(true)
-                        Log.d("AAA", "Success update post" + response.data.toString())
+                when (val response = repositoryImpl.setDay(token,day) ){
+                    is ResultData.Success-> {
+                        _day.postValue(response.data)
                     }
                     is ResultData.Error -> {
-                        _errorMessage.postValue(response.exception.toString())
-                    }
 
+//                        _errorMessage.postValue(response.exception.message)
+                    }
+                }
+            } catch (e: Exception) {
+
+//                _errorMessage.postValue(e.toString())
+            }
+
+        }
+    }
+    fun updateUser(token: String, userInfoPostRequest: UserInfoPostRequest){
+        viewModelScope.launch {
+            try {
+                when (val response = repositoryImpl.updateUserInformationApi(token, userInfoPostRequest) ){
+                    is ResultData.Success-> {
+                        _userPostResponse.postValue(response.data)
+                    }
+                    is ResultData.Error -> {
+                        _errorMessage.postValue(response.exception.message)
+                    }
                 }
             } catch (e: Exception) {
                 _errorMessage.postValue(e.toString())
             }
         }
     }
+    fun getUserInformation(token:String) {
+        viewModelScope.launch {
+            try {
+                when (val response = repositoryImpl.getUserInformationApi(token) ){
+                    is ResultData.Success-> {
+                        _user.postValue(response.data)
+                    }
+                    is ResultData.Error -> {
+
+                        _errorMessage.postValue(response.exception.message)
+                    }
+                }
+            } catch (e: Exception) {
+
+                _errorMessage.postValue(e.toString())
+            }
+
+        }
+    }
+
+
+
 
 }

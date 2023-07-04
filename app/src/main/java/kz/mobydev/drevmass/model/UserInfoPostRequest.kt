@@ -22,7 +22,7 @@ data class UserInfoPostRequest(
         @SerializedName("birth")
         val birth: String, // 2003-01-01
         @SerializedName("gender")
-        val gender: Boolean, // true
+        val gender: Int, // true
         @SerializedName("height")
         val height: Int, // 10
         @SerializedName("weight")

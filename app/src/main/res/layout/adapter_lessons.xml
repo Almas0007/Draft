@@ -2,12 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btnLesson"
     android:layout_width="match_parent"
     android:layout_height="330dp"
-    android:background="@drawable/corner_radius_40dp">
+    android:background="@drawable/corner_radius_40dp"
+    android:layout_marginBottom="@dimen/dp_10">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvTittle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_24"
@@ -17,22 +19,22 @@
         android:text="Урок 1."
         android:textColor="@color/black"
         android:textSize="@dimen/sp_18"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/btnFavorite"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/dp_24"
         android:background="@drawable/button_favorite"
-        app:layout_constraintBottom_toBottomOf="@+id/textView5"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTittle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView5" />
+        app:layout_constraintTop_toTopOf="@+id/tvTittle" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/tvDescriptionLessons"
         android:layout_width="@dimen/dp_0"
         android:layout_height="@dimen/dp_0"
         android:layout_marginStart="@dimen/dp_24"
@@ -40,44 +42,49 @@
         android:layout_marginEnd="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_8"
         android:fontFamily="@font/rubik_light"
+        android:maxLines="4"
+        android:ellipsize="end"
         android:text="Деревянный роликовый тренажер-массажер для спины Древмасс. Полная комплектация и сборка массажера"
         android:textColor="@color/grey_300"
-        app:layout_constraintBottom_toTopOf="@+id/shapeableImageView"
+        app:layout_constraintBottom_toTopOf="@+id/imgLessons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView5" />
+        app:layout_constraintTop_toBottomOf="@id/tvTittle" />
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/shapeableImageView"
+        android:id="@+id/imgLessons"
         android:layout_width="match_parent"
         android:layout_height="184dp"
         android:layout_margin="@dimen/dp_8"
+        android:scaleType="centerCrop"
         android:background="@color/grey_50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:shapeAppearanceOverlay="@style/style_corner_radius_40dp" />
 
     <ImageButton
+        android:id="@+id/btnPlayVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dp_24"
         android:background="@drawable/button_play"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="@dimen/dp_24"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/tvTimeVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5:13"
-        android:fontFamily="@font/rubik_regular"
-        android:textColor="@color/woody"
-        android:background="@drawable/background_12dp"
-        android:backgroundTint="@color/white"
-        android:paddingHorizontal="@dimen/dp_10"
-        android:paddingVertical="@dimen/dp_5"
-        android:textColorHighlight="@color/white"
         android:layout_marginStart="@dimen/dp_33"
         android:layout_marginBottom="@dimen/dp_30"
+        android:background="@drawable/background_12dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/rubik_regular"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:paddingVertical="@dimen/dp_5"
+        android:text="5:13"
+        android:textColor="@color/woody"
+        android:textColorHighlight="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

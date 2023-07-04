@@ -41,9 +41,9 @@ class SplashFragment : Fragment() {
             } else if (shared.getToken() != null && shared.getToken().isNotEmpty()) {
                 val targetFragment = arguments?.getString("targetFragment")
                 if (targetFragment == "InfoFragment") {
-                    findNavController().navigate(R.id.action_splashFragment_to_productFragment)
+                    findNavController().navigate(R.id.action_splashFragment_to_lessonsFragment)
                 }
-                findNavController().navigate(R.id.action_splashFragment_to_productFragment)
+                findNavController().navigate(R.id.action_splashFragment_to_lessonsFragment)
             } else {
                 findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
             }

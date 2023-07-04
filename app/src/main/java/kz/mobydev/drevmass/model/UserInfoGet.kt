@@ -3,10 +3,11 @@ package kz.mobydev.drevmass.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
+import kz.mobydev.drevmass.model.day.Day
 
 data class UserInfoGet(
     @SerializedName("day")
-    val day: Any?, // null
+    val day: Day?, // null
     @SerializedName("email")
     val email: String, // qa@q.q
     @SerializedName("id")

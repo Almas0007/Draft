@@ -5,8 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.TypeConverters
 import kz.mobydev.drevmass.model.Lesson
+import kz.mobydev.drevmass.model.Products
 
-@Database(entities = [Lesson::class], version = 1)
+@Database(entities = [Lesson::class, Products.ProductsItem::class], version = 1)
 @TypeConverters(RoomDataConverter::class)
 abstract class AppDb: androidx.room.RoomDatabase() {
 
