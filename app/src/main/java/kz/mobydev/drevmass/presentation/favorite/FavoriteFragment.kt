@@ -53,24 +53,32 @@ class FavoriteFragment : Fragment() {
     private val isInternetOn = InternetUtil.isInternetOn()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (!isInternetOn){
-            Toast(appComponents.context()).showCustomToast("Нет подключения к интернету!", appComponents.context(),this@FavoriteFragment)
+        if (!isInternetOn) {
+            Toast(appComponents.context()).showCustomToast(
+                "Нет подключения к интернету!",
+                appComponents.context(),
+                this@FavoriteFragment
+            )
         }
         binding.shimmerFavorite.startShimmer()
         binding.shimmerFavorite.visibility = View.VISIBLE
         observe()
-        updateValueFavorite()
     }
-    private fun updateValueFavorite(){
+
+    private fun updateValueFavorite() {
         getViewModel().getFavorite(shared.getToken())
-        getViewModel().favoriteList.observe(viewLifecycleOwner){
-            provideNavigationHost()?.valueFavorite(it.size)
+        getViewModel().favoriteList.observe(viewLifecycleOwner) {
+            if (it.size==0) {
+                provideNavigationHost()?.valueFavorite(0)
+            }else{
+            provideNavigationHost()?.valueFavorite(it.size)}
         }
     }
-    private fun observe(){
-        getViewModel().getFavorite(shared.getToken())
+
+    private fun observe() {
+        updateValueFavorite()
         getViewModel().favoriteList.observe(viewLifecycleOwner, Observer {
-            if (it!=null){
+            if (it != null) {
                 binding.shimmerFavorite.stopShimmer()
                 binding.shimmerFavorite.visibility = View.GONE
             }
@@ -80,33 +88,45 @@ class FavoriteFragment : Fragment() {
             binding.rcFavorite.adapter = adapter
             adapter.setOnItemClickListener(object : RecyclerViewItemClickCallback {
                 override fun onRecyclerViewItemClick(id: Int) {
-                    val action = FavoriteFragmentDirections.actionFavoriteFragmentToLessonAboutFragment(id)
+                    val action =
+                        FavoriteFragmentDirections.actionFavoriteFragmentToLessonAboutFragment(id)
                     findNavController().navigate(action)
                 }
             })
             adapter.setOnFavoriteClickListener(object : RecyclerViewFavoriteClickCallback {
-                override fun onRecyclerViewFavoriteClick(id: Int,favorite: Boolean) {
+                override fun onRecyclerViewFavoriteClick(id: Int, favorite: Boolean) {
                     updateValueFavorite()
                     getViewModel().getFavorite(shared.getToken())
-                    if (favorite){
-                        getViewModel().actionFavorite(shared.getToken(),id,"add")
-                        Toast(appComponents.context()).showCustomToast("Урок добавлен\u2028в избранное!", appComponents.context(),this@FavoriteFragment)
-                    }else{
-                        getViewModel().actionFavorite(shared.getToken(),id,"remove")
-                        Toast(appComponents.context()).showCustomToast("Урок удален" + "\u2028из избранных!", appComponents.context(),this@FavoriteFragment)
+                    if (favorite) {
+                        getViewModel().actionFavorite(shared.getToken(), id, "add")
+                        Toast(appComponents.context()).showCustomToast(
+                            "Урок добавлен\u2028в избранное!",
+                            appComponents.context(),
+                            this@FavoriteFragment
+                        )
+                    } else {
+                        getViewModel().actionFavorite(shared.getToken(), id, "remove")
+                        Toast(appComponents.context()).showCustomToast(
+                            "Урок удален" + "\u2028из избранных!",
+                            appComponents.context(),
+                            this@FavoriteFragment
+                        )
+                        updateValueFavorite()
                     }
                 }
 
             })
             adapter.setOnPlayClickListener(object : RecyclerViewPlayClickCallback {
                 override fun onRecyclerViewPlayClick(url: String) {
-                    val action = FavoriteFragmentDirections.actionFavoriteFragmentToVideoFragment(url)
+                    val action =
+                        FavoriteFragmentDirections.actionFavoriteFragmentToVideoFragment(url)
                     findNavController().navigate(action)
                 }
 
             })
         })
     }
+
     override fun onResume() {
         super.onResume()
         provideNavigationHost()?.apply {

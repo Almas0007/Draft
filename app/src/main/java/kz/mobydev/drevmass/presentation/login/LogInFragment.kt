@@ -56,6 +56,7 @@ class LogInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         buttonSendChangeBackgrounds()
         validation()
+        initResult()
         var login: String = ""
         var password: String = ""
         binding.apply {
@@ -138,10 +139,14 @@ class LogInFragment : Fragment() {
     }
     private fun initViews(login: String, password: String) {
         getViewModel().validationInputValue(login, password)
+        shared.setPassword(password)
+    }
+    private fun initResult(){
         getViewModel().login.observe(viewLifecycleOwner, Observer {
-            shared.setToken(binding.tvEditTextPasswordLogin.toString())
             shared.setToken(it.accessToken)
-            findNavController().navigate(R.id.action_logInFragment_to_productFragment)
+            shared.setName(it.user.name)
+            shared.setEmail(it.user.email)
+            findNavController().navigate(R.id.lessonsFragment )
         })
         getViewModel().errorMessage.observe(viewLifecycleOwner, Observer {
             val dialogFragment = ErrorEmailDialogFragment()
@@ -159,7 +164,7 @@ class LogInFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Вход"
+                title = ""
             )
         }
     }
@@ -174,7 +179,7 @@ class LogInFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Вход"
+                title = ""
             )
         }
     }

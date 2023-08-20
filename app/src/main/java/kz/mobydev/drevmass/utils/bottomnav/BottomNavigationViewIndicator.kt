@@ -79,7 +79,7 @@ class BottomNavigationViewIndicator @JvmOverloads constructor(
         backgroundDrawable.draw(canvas)
     }
 
-    private fun updateRectByIndex(index: Int, animated: Boolean) {
+    fun updateRectByIndex(index: Int, animated: Boolean) {
         this.index = index
         target?.apply {
             if (childCount < 1 || index >= childCount) return

@@ -1,5 +1,8 @@
 package kz.mobydev.drevmass.presentation.profile
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -48,7 +51,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!isInternetOn){
-            Toast(appComponents.context()).showCustomToast("Нет подключения к интернету!", appComponents.context(),this@ProductFragment)
+            Toast(appComponents.context()).showCustomToast("Нет подключения к интернету!", appComponents.context(),this@ProfileFragment)
         }
         observe()
         binding.btnProfile.setOnClickListener {
@@ -65,6 +68,15 @@ class ProfileFragment : Fragment() {
         }
         binding.btnNotification.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_notificationFragment)
+        }
+        binding.btnCallback.setOnClickListener {
+            val packageName = "kz.mobydev.drevmass&hl=ru&gl=US"
+            try {
+
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+            }
         }
     }
 

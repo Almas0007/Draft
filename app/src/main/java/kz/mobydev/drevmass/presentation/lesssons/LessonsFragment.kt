@@ -63,8 +63,10 @@ class LessonsFragment : Fragment() {
     private fun updateValueFavorite(){
         getViewModel().getFavorite(shared.getToken())
         getViewModel().lessonsFavorite.observe(viewLifecycleOwner){
-            Log.d("TAG", "updateValueFavorite: ${it.size}")
-            provideNavigationHost()?.valueFavorite(it.size)
+            if (it.size==0) {
+                provideNavigationHost()?.valueFavorite(0)
+            }else{
+                provideNavigationHost()?.valueFavorite(it.size)}
         }
     }
     private fun observe() {

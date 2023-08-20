@@ -16,7 +16,6 @@
         android:background="@drawable/badge_view"
         android:backgroundTint="@color/woody"
         android:gravity="center"
-        tools:text="1"
         android:textColor="@color/white"
         android:textSize="12sp" />
 

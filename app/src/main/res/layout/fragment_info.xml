@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.info.InfoFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,11 +32,13 @@
         android:id="@+id/secondInfoPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="280dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/viewPagerInfo">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearLayoutCompat"
@@ -156,9 +161,12 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="80dp"
+            android:layout_marginEnd="24dp"
             android:fontFamily="@font/rubik_regular"
             android:text="По каким дням хотите заниматься?"
+            android:textAlignment="center"
             android:textColor="@color/grey_black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -200,9 +208,11 @@
         android:id="@+id/firstInfoPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:layout_marginTop="280dp"
+        android:layout_marginBottom="@dimen/dp_24"
         android:paddingBottom="@dimen/dp_4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/btnRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -378,8 +388,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Дата рождения"
             android:fontFamily="@font/rubik_light"
+            android:text="Дата рождения"
             android:textColor="@color/grey_black"
             app:layout_constraintStart_toStartOf="@+id/textWeight"
             app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -399,9 +409,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/rubik_light"
             android:text="Ваша активность"
             android:textColor="@color/grey_black"
-            android:fontFamily="@font/rubik_light"
             android:textSize="@dimen/dp_18"
             app:layout_constraintStart_toStartOf="@+id/view4"
             app:layout_constraintTop_toBottomOf="@+id/view4" />
@@ -412,6 +422,7 @@
             android:layout_height="@dimen/dp_32"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="@dimen/dp_3"
             android:background="@drawable/background_50dp_grey_50"
             android:fontFamily="@font/rubik_light"
             android:gravity="center"
@@ -420,7 +431,6 @@
             android:textAllCaps="false"
             android:textColor="@color/grey_black"
             android:textSize="@dimen/sp_14"
-            android:layout_marginBottom="@dimen/dp_3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnMedium"
             app:layout_constraintStart_toStartOf="@+id/textView6"
@@ -504,3 +514,4 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

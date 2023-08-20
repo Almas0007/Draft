@@ -90,7 +90,7 @@ class ProductFragment : Fragment() {
                 false,
                 titleVisible = true,
                 btnProfileVisible = true,
-                title = "Ролики для массажёра"
+                title = "Массажеры и аксессуары"
             )
         }
     }
@@ -106,7 +106,7 @@ class ProductFragment : Fragment() {
                 false,
                 titleVisible = true,
                 btnProfileVisible = true,
-                title = "Ролики для массажёра"
+                title = "Массажеры и аксессуары"
             )
         }
     }

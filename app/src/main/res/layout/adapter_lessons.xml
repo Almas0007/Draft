@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/btnLesson"
     android:layout_width="match_parent"
-    android:layout_height="330dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/corner_radius_40dp"
     android:layout_marginBottom="@dimen/dp_10">
 
@@ -36,14 +36,17 @@
     <TextView
         android:id="@+id/tvDescriptionLessons"
         android:layout_width="@dimen/dp_0"
-        android:layout_height="@dimen/dp_0"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_24"
         android:layout_marginTop="@dimen/dp_14"
         android:layout_marginEnd="@dimen/dp_24"
         android:layout_marginBottom="@dimen/dp_8"
         android:fontFamily="@font/rubik_light"
-        android:maxLines="4"
+        android:textAlignment="textStart"
         android:ellipsize="end"
+        android:textSize="14sp"
+        android:maxLines="3"
+        android:autoSizeTextType="none"
         android:text="Деревянный роликовый тренажер-массажер для спины Древмасс. Полная комплектация и сборка массажера"
         android:textColor="@color/grey_300"
         app:layout_constraintBottom_toTopOf="@+id/imgLessons"

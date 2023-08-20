@@ -26,4 +26,7 @@
         <!-- Измените цвет выделения даты -->
         <item name="colorAccent">@color/woody_opacity</item>
     </style>
+    <style name="TextSpacing" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:lineSpacingMultiplier">1.55</item>
+    </style>
 </resources>

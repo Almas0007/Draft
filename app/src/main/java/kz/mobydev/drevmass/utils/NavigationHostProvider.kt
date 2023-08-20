@@ -12,4 +12,5 @@ interface NavigationHostProvider {
     fun setOnClickSave(visibility: Boolean)
 
     fun valueFavorite(value: Int)
+    fun visibilityTutorialButton(videoLink: String, visibility: Boolean)
 }

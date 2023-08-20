@@ -19,6 +19,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTutorial"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/corner_radius_40dp"
+        android:backgroundTint="@color/woody"
+        android:drawableStart="@drawable/ic_play_white"
+        android:fontFamily="@font/rubik_light"
+        android:paddingHorizontal="40dp"
+        android:paddingVertical="16dp"
+        android:text="  Как использовать?"
+        android:visibility="gone"
+        android:textAllCaps="false"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -44,8 +63,10 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxWidth="@dimen/dp_300"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_gravity="center"
-            android:text=""
             android:fontFamily="@font/rubik_light"
             android:textColor="@color/woody"
             android:textSize="@dimen/sp_18" />
@@ -98,7 +119,7 @@
     <kz.mobydev.drevmass.utils.bottomnav.BottomNavigationViewIndicator
         android:id="@+id/bottom_navigation_indicator"
         android:layout_width="0dp"
-        android:layout_height="4dp"
+        android:layout_height="3dp"
         app:clipableBackground="@drawable/ic_line_selected"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

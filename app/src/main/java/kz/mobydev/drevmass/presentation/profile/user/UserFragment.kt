@@ -2,6 +2,7 @@ package kz.mobydev.drevmass.presentation.profile.user
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -70,16 +71,15 @@ class UserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observe()
         selectInPageFirst()
-        binding.btnDeleteAccount.setOnClickListener {
-            shared.setToken("")
-            findNavController().navigate(R.id.action_userFragment_to_splashFragment)
+        binding.btnSave.setOnClickListener {
+            send()
         }
 
 
     }
 
-    fun send(click:Boolean){
-        if (click) {
+    fun send(){
+
             val gender = if (selectMale) 1 else 0
             val userInfo = UserInfoPostRequest(
                 name = selectName,
@@ -96,25 +96,33 @@ class UserFragment : Fragment() {
             )
             shared.setPassword(selectPassword)
             getViewModel().updateUser(shared.getToken(), userInfoPostRequest = userInfo)
-        }
+
+            getViewModel().userInfoResponse.observe(viewLifecycleOwner){
+                if (it!=null){
+                    findNavController().navigate(R.id.action_userFragment_to_profileFragment)
+                }
+            }
     }
 
     private fun observe() {
         getViewModel().getUser(shared.getToken())
+        Log.d("TAG", "observe: ${shared.getToken()}")
         getViewModel().userInfo.observe(viewLifecycleOwner) { userInfo ->
+            Log.d("TAG", "observe: $userInfo")
             binding.let { it ->
                 selectName = userInfo.name
                 selectEmail = userInfo.email
                 selectPassword = shared.getPassword()
                 selectConfirmPassword = shared.getPassword()
+                it.tvEditTextNameRegIn.setText(userInfo.name?:shared.getName())
+                it.tvEditTextEmailRegIn.setText(userInfo.email?:shared.getEmail())
+
                 if (userInfo.information != null) {
                     selectMale = userInfo.information.gender == 0
                     selectHeight = userInfo.information.height.toString()
                     selectWeight = userInfo.information.weight.toString()
                     selectBirthday = userInfo.information.birth
                     selectActivity = userInfo.information.activity
-                    it.tvEditTextNameRegIn.setText(userInfo.name)
-                    it.tvEditTextEmailRegIn.setText(userInfo.email)
                     it.tvEditTextHeight.setText(userInfo.information.height)
                     it.tvEditTextWeight.setText(userInfo.information.weight)
 
@@ -351,7 +359,7 @@ class UserFragment : Fragment() {
             setNavigationVisibility(false)
             setNavigationToolBar(false)
             setOnClickBack(R.id.action_userFragment_to_profileFragment)
-            setOnClickSave(true)
+            setOnClickSave(false)
             additionalToolBarConfig(
                 true,
                 titleVisible = true,
@@ -367,20 +375,13 @@ class UserFragment : Fragment() {
             setNavigationVisibility(false)
             setNavigationToolBar(true)
             setOnClickBack(R.id.action_userFragment_to_profileFragment)
-            setOnClickSave(true)
+            setOnClickSave(false)
             additionalToolBarConfig(
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
                 title = "Профиль"
             )
-        }
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        provideNavigationHost()?.apply {
-            send(true)
-            setOnClickSave(false)
         }
     }
 }

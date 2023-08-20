@@ -5,6 +5,7 @@ import kz.mobydev.drevmass.utils.NavigationHostProvider
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -14,10 +15,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.menu.MenuItem
 import java.util.Locale
 import javax.inject.Inject
 import kz.mobydev.drevmass.data.preferences.PreferencesDataSource
 import kz.mobydev.drevmass.databinding.ActivityMainBinding
+import kz.mobydev.drevmass.presentation.product.about.AboutProductFragmentDirections
 import kz.mobydev.drevmass.presentation.profile.user.UserFragment
 import kz.mobydev.drevmass.presentation.profile.user.UserViewModel
 import kz.mobydev.drevmass.utils.EnumBottomNavigationLayout
@@ -49,10 +52,7 @@ class MainActivity : BaseActivity(), NavigationHostProvider {
         statusNavBar()
         language()
 
-
-//        val navController = findNavController(R.id.nav_host_fragment)
-//        binding.navView.setupWithNavController(navController)
-        //Вариант из лучших но только не реализует то что я задумал
+        binding.bottomNavigationIndicator.updateRectByIndex(R.id.lessonsFragment,true)
 
         binding.navView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -79,19 +79,31 @@ class MainActivity : BaseActivity(), NavigationHostProvider {
 
         val itemView = mbottomNavigationMenuView.getChildAt(position) as BottomNavigationItemView
 
-        val badgeView =
-            LayoutInflater.from(this).inflate(R.layout.view_bottom_notify, mbottomNavigationMenuView, false)
-        val badgeTextView = badgeView.findViewById<TextView>(R.id.notifications_badge)
+        // Check if the badgeView is already added to the itemView
+        val badgeTextView = itemView.findViewById<TextView>(R.id.notifications_badge)
 
         if (value == 0) {
-            badgeTextView.visibility = View.GONE
-            itemView.removeView(badgeView)
+            // If badgeTextView exists and value is 0, then hide the badgeTextView and remove the badgeView from the itemView
+            if (badgeTextView != null) {
+                badgeTextView.visibility = View.GONE // Hide badgeTextView
+                itemView.removeView(badgeTextView.parent as View) // Remove badgeView from itemView
+            }
         } else {
-            badgeTextView.visibility = View.VISIBLE
-            badgeTextView.text = value.toString()
-            itemView.addView(badgeView)
+            // If value is not 0, then show the badgeTextView and add the badgeView to the itemView
+            if (badgeTextView == null) {
+                // If badgeTextView doesn't exist, create and add the badgeView
+                val badgeView =
+                    LayoutInflater.from(this).inflate(R.layout.view_bottom_notify, mbottomNavigationMenuView, false)
+                val newBadgeTextView = badgeView.findViewById<TextView>(R.id.notifications_badge)
+                newBadgeTextView.text = value.toString()
+                itemView.addView(badgeView)
+            } else {
+                // If badgeTextView already exists, update the value
+                badgeTextView.text = value.toString()
+            }
         }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }
@@ -165,9 +177,12 @@ class MainActivity : BaseActivity(), NavigationHostProvider {
     }
 
     override fun setOnClickBack(id: Int) {
+        if (id==1){binding.toolbarBack.setOnClickListener {
+            navController.navigate(AboutProductFragmentDirections.actionAboutProductFragmentToVideoFragment("uR58PtUYSEc"))
+        }}else{
         binding.toolbarBack.setOnClickListener {
             navController.navigate(id)
-        }
+        }}
     }
 
     override fun setOnClickProfile() {
@@ -208,7 +223,20 @@ class MainActivity : BaseActivity(), NavigationHostProvider {
     }
 
     override fun valueFavorite(value: Int) {
+        Log.d("TAG", "VAAAAAAALUE: ${value}")
         bindNavigationViews(2,value)
+    }
+
+    override fun visibilityTutorialButton(videoLink: String, visibility: Boolean) {
+        if (visibility) {
+            binding.btnTutorial.visibility = View.VISIBLE
+            binding.btnTutorial.setOnClickListener {
+                navController.navigate(AboutProductFragmentDirections.actionAboutProductFragmentToVideoFragment(videoLink))
+            }
+        } else {
+            binding.btnTutorial.visibility = View.GONE
+        }
+
     }
 
 }

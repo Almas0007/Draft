@@ -54,12 +54,18 @@ class LessonAboutFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.shimmerProduct.startShimmer()
+        binding.contentAboutLesson.visibility = View.GONE
         observe()
     }
 
     private fun observe() {
         getViewModel().getLesson(shared.getToken(), args.id)
         getViewModel().lesson.observe(viewLifecycleOwner, Observer {
+            if (it!=null){
+            binding.contentAboutLesson.visibility = View.VISIBLE
+            binding.shimmerProduct.stopShimmer()
+                binding.shimmerProduct.visibility = View.GONE}
             binding.tvTittleLesson.text = it.name
             binding.tvDescription.text = it.title
             binding.tvFullDescription.text = it.description
@@ -106,11 +112,7 @@ class LessonAboutFragment : Fragment() {
                     )
                 }
             }
-            binding.btnTutorial.setOnClickListener { view ->
-                val action =
-                    LessonAboutFragmentDirections.actionLessonAboutFragmentToVideoFragment(it.videoSrc)
-                findNavController().navigate(action)
-            }
+
             binding.btnPlay.setOnClickListener { view ->
                 val action =
                     LessonAboutFragmentDirections.actionLessonAboutFragmentToVideoFragment(it.videoSrc)

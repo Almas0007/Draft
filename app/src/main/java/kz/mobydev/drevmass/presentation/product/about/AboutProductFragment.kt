@@ -39,6 +39,8 @@ class AboutProductFragment : Fragment() {
 
     private lateinit var binding: FragmentAboutProductBinding
 
+    private var videoLink:String = ""
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,12 +52,20 @@ class AboutProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.shimmerAboutProduct.startShimmer()
+        binding.contentLayoutProduct.visibility = View.GONE
         observe()
     }
 
     private fun observe() {
         getViewModel().getProducts(shared.getToken(), args.id)
         getViewModel().product.observe(viewLifecycleOwner, Observer {
+            if (it!=null){
+                binding.contentLayoutProduct.visibility = View.VISIBLE
+                binding.shimmerAboutProduct.stopShimmer()
+                binding.shimmerAboutProduct.visibility = View.GONE
+            }
+
             binding.run {
                 Glide.with(appComponents.context())
                     .load(MEDIA_URL + it.imageSrc) // Замените URL на фактический путь к изображению
@@ -70,9 +80,9 @@ class AboutProductFragment : Fragment() {
                 tvPrice.text = it.price.toString() + RUB_CHAR
                 tvVolume.text = "${it.height}см x ${it.length}см"
                 tvWeight.text = "${it.weight} г"
-                btnTutorial.setOnClickListener { view->
-                    val action = AboutProductFragmentDirections.actionAboutProductFragmentToVideoFragment(it.videoSrc)
-                    findNavController().navigate(action)
+                videoLink = it.videoSrc
+                provideNavigationHost()?.apply {
+                    visibilityTutorialButton(it.videoSrc,true)
                 }
             }
         })
@@ -91,6 +101,7 @@ class AboutProductFragment : Fragment() {
                 btnProfileVisible = true,
                 title = ""
             )
+                visibilityTutorialButton(videoLink,false)
         }
     }
 
@@ -104,9 +115,17 @@ class AboutProductFragment : Fragment() {
             additionalToolBarConfig(
                 true,
                 titleVisible = true,
-                btnProfileVisible = true,
+                btnProfileVisible = false,
                 title = ""
             )
+            visibilityTutorialButton(videoLink,false)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        provideNavigationHost()?.apply {
+            visibilityTutorialButton(videoLink,false)
         }
     }
 }

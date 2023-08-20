@@ -131,7 +131,7 @@ class ResetPasswordFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Восстановление пароля"
+                title = ""
             )
         }
     }
@@ -146,7 +146,7 @@ class ResetPasswordFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Восстановление пароля"
+                title = ""
             )
         }
     }

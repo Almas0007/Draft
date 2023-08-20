@@ -22,13 +22,17 @@ class FavoriteViewModel @Inject constructor(
     private var _errorMessage = MutableLiveData<String>()
     var errorMessage: LiveData<String> = _errorMessage
 
-    fun getFavorite(token:String) {
+    private var _removeMessage = MutableLiveData<Boolean>()
+    var removeMessage: LiveData<Boolean> = _removeMessage
+
+    fun getFavorite(token: String) {
         viewModelScope.launch {
             try {
-                when (val response = repositoryImpl.getFavoriteAPI(token) ){
-                    is ResultData.Success-> {
+                when (val response = repositoryImpl.getFavoriteAPI(token)) {
+                    is ResultData.Success -> {
                         _favoriteList.postValue(response.data)
                     }
+
                     is ResultData.Error -> {
                         _errorMessage.postValue(response.exception.message)
                     }
@@ -39,12 +43,17 @@ class FavoriteViewModel @Inject constructor(
 
         }
     }
-    fun actionFavorite(token:String,id:Int,action:String) {
+
+    fun actionFavorite(token: String, id: Int, action: String) {
         viewModelScope.launch {
             try {
-                when (val response = repositoryImpl.actionFavoriteAPI(token,id,action) ){
-                    is ResultData.Success-> {
+                when (val response = repositoryImpl.actionFavoriteAPI(token, id, action)) {
+                    is ResultData.Success -> {
+                        if (action == "remove") {
+                            _removeMessage.postValue(true)
+                        }
                     }
+
                     is ResultData.Error -> {
                         Log.d("AAA", response.exception.message.toString())
                         _errorMessage.postValue(response.exception.message)

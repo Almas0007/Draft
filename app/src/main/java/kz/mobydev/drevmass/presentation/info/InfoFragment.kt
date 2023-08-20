@@ -104,11 +104,21 @@ class InfoFragment : Fragment() {
         } else {
             binding.btnRegistration.text = "Начать заниматься!"
         }
+        binding.skipFragment.setOnClickListener {
+            if (viewPager2Info.currentItem == 0) {
+                binding.skipFragment.text = "Назад"
+                viewPager2Info.currentItem = 1
+            } else {
+                viewPager2Info.currentItem = 0
+                binding.skipFragment.text = "Пропустить"
+            }
+        }
         binding.btnRegistration.setOnClickListener {
 
             if (viewPager2Info.currentItem == 0) {
                 viewPager2Info.currentItem = 1
             } else {
+                if(!selectHeight.equals("1") && !selectWeight.equals("1") && !selectBirthday.equals("2000-01-01")){
                 firstSend()
                 secondSend()
                 Log.d(
@@ -118,12 +128,16 @@ class InfoFragment : Fragment() {
                 //notification()
                 getViewModel().userInfoResponse.observe(viewLifecycleOwner) {
                     if (it != null) {
-                        findNavController().navigate(R.id.action_infoFragment_to_lessonsFragment)
+                        findNavController().navigate(R.id.lessonsFragment)
                     }
                 }
                 getViewModel().errorMessage.observe(viewLifecycleOwner) {
                     Log.d("AAA", "onViewCreated ERRROR: " + it)
                 }
+
+            }else{
+                    viewPager2Info.currentItem = 0
+            }
 
             }
         }
@@ -473,33 +487,23 @@ class InfoFragment : Fragment() {
             minute,
             0
         )
-        val selectedDays = mutableListOf<Int>()
-        if (dayPn.toString() == "1") selectedDays.add(Calendar.MONDAY)
-        if (dayVt.toString() == "1") selectedDays.add(Calendar.TUESDAY)
-        if (daySr.toString() == "1") selectedDays.add(Calendar.WEDNESDAY)
-        if (dayCht.toString() == "1") selectedDays.add(Calendar.THURSDAY)
-        if (dayPt.toString() == "1") selectedDays.add(Calendar.FRIDAY)
-        if (daySb.toString() == "1") selectedDays.add(Calendar.SATURDAY)
-        if (dayVs.toString() == "1") selectedDays.add(Calendar.SUNDAY)
+        val selectedDaysList = mutableListOf<Int>()
+        if (dayPn.toString() == "1") selectedDaysList.add(Calendar.MONDAY)
+        if (dayVt.toString() == "1") selectedDaysList.add(Calendar.TUESDAY)
+        if (daySr.toString() == "1") selectedDaysList.add(Calendar.WEDNESDAY)
+        if (dayCht.toString() == "1") selectedDaysList.add(Calendar.THURSDAY)
+        if (dayPt.toString() == "1") selectedDaysList.add(Calendar.FRIDAY)
+        if (daySb.toString() == "1") selectedDaysList.add(Calendar.SATURDAY)
+        if (dayVs.toString() == "1") selectedDaysList.add(Calendar.SUNDAY)
 
+        val selectedDays = selectedDaysList.toList()
 
         val customTime = customCalendar.timeInMillis
         val currentTime = System.currentTimeMillis()
         val data = Data.Builder().putInt(NotifyWork.NOTIFICATION_ID, 0).build()
         val delay = customTime - currentTime
 
-        val DaysList = mutableListOf<Int>()
-        DaysList.add(Calendar.MONDAY)
-        DaysList.add(Calendar.TUESDAY)
-        DaysList.add(Calendar.WEDNESDAY)
-        DaysList.add(Calendar.THURSDAY)
-        DaysList.add(Calendar.FRIDAY)
-        DaysList.add(Calendar.SATURDAY)
-        DaysList.add(Calendar.SUNDAY)
-
         Log.d("TAG", "selected days: $selectedDays")
-        Log.d("TAG", "DaysList: $DaysList")
-
 //                    scheduleNotification(delay, data)
         scheduleNotification(delay, selectedDays, data)
 

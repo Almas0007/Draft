@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/grey_300"
-    android:fillViewport="true"
     tools:context=".presentation.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,32 +25,35 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="-120dp"
+            android:layout_marginBottom="1dp"
             android:background="@drawable/background_40dp_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imgProduct">
+
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgBannerProfile"
                 android:layout_width="46dp"
                 android:layout_height="40dp"
-                android:src="@drawable/drevmass_logo"
                 android:layout_marginTop="@dimen/dp_24"
-                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/drevmass_logo"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvHelloName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_16"
                 android:ellipsize="end"
                 android:fontFamily="@font/rubik_regular"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:textAlignment="center"
                 android:textColor="@color/grey_black"
                 android:textSize="@dimen/sp_24"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -60,14 +62,17 @@
 
             <TextView
                 android:id="@+id/tvEmail"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_16"
+                android:ellipsize="end"
                 android:fontFamily="@font/rubik_light"
+                android:maxLines="1"
+                android:textAlignment="center"
                 android:textColor="@color/grey_300"
                 android:textSize="@dimen/sp_16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tvHelloName"
+                app:layout_constraintStart_toStartOf="@+id/tvHelloName"
                 app:layout_constraintTop_toBottomOf="@id/tvHelloName" />
 
             <LinearLayout
@@ -304,15 +309,18 @@
                     android:textColor="@color/grey_black"
                     android:textSize="16sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:background="@color/grey_50"
                 android:layout_marginHorizontal="@dimen/dp_24"
                 android:layout_marginTop="@dimen/dp_16"
-                app:layout_constraintTop_toBottomOf="@id/btnCallback"
+                android:layout_marginBottom="60dp"
+                android:background="@color/grey_50"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/btnCallback" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

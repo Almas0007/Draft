@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_logInFragment_to_resetPasswordFragment"
             app:destination="@id/resetPasswordFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_lessonsFragment"
+            app:destination="@id/lessonsFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -158,7 +161,7 @@
             android:id="@+id/action_infoFragment_to_lessonsFragment"
             app:destination="@id/lessonsFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/recoverFragment"
@@ -185,7 +188,8 @@
         <action
             android:id="@+id/action_aboutProductFragment_to_videoFragment"
             app:destination="@id/videoFragment"
-            app:popUpTo="@id/productFragment">
+            app:popUpTo="@id/aboutProductFragment"
+            app:popUpToInclusive="false">
             <argument
                 android:name="url"
                 app:argType="string" />

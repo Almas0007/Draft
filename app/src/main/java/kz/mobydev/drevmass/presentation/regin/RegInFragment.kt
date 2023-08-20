@@ -262,7 +262,7 @@ class RegInFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Регистрация"
+                title = ""
             )
         }
     }
@@ -277,7 +277,7 @@ class RegInFragment : Fragment() {
                 true,
                 titleVisible = true,
                 btnProfileVisible = false,
-                title = "Регистрация"
+                title = ""
             )
         }
     }

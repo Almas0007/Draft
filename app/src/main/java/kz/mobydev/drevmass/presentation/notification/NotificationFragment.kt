@@ -1,7 +1,11 @@
 package kz.mobydev.drevmass.presentation.notification
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.os.Build
@@ -41,6 +45,7 @@ import kz.mobydev.drevmass.databinding.FragmentNotificationBinding
 import kz.mobydev.drevmass.databinding.FragmentProfileBinding
 import kz.mobydev.drevmass.model.day.DaysPostRequest
 import kz.mobydev.drevmass.presentation.profile.ProfileViewModel
+import kz.mobydev.drevmass.utils.AppNotificationReceiver
 import kz.mobydev.drevmass.utils.NotifyWork
 import kz.mobydev.drevmass.utils.NotifyWork.Companion.NOTIFICATION_ID
 import kz.mobydev.drevmass.utils.NotifyWork.Companion.NOTIFICATION_WORK
@@ -79,7 +84,22 @@ class NotificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkPermission()
+        checkNotificationPermission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                isPermission = true
+                selectInPageSecond() // Выполняем код, если разрешение предоставлено
+            } else {
+                isPermission = false
+                // Обработка, если разрешение не было предоставлено
+            }
+        }
+
+        // Запрашиваем разрешение на уведомления
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
         selectInPageSecond()
         checkNotificationPermission = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
@@ -93,59 +113,57 @@ class NotificationFragment : Fragment() {
     private var isPermission = false
 
 
-    private fun checkPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    appComponents.context(),
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                isPermission = true
-            } else {
-                isPermission = false
 
-                checkNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
+    private fun scheduleNotification(selectedDaysList: List<Int>, timeInMillis: Long) {
+        val alarmManager = appComponents.context().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val notificationIntent = Intent(appComponents.context(), AppNotificationReceiver::class.java)
+        notificationIntent.putExtra("YOUR_EXTRA_DATA_KEY", "Your data here") // Pass any data you want to send with the alarm
+
+        // Add PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE based on your needs
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_IMMUTABLE
         } else {
-            isPermission = true
+            PendingIntent.FLAG_UPDATE_CURRENT
         }
+
+        val pendingIntent = PendingIntent.getBroadcast(appComponents.context(), 0, notificationIntent, flags)
+
+        // Calculate the time for the first alarm
+        val currentTime = System.currentTimeMillis()
+        var triggerTime = timeInMillis
+        if (triggerTime <= currentTime) {
+            // If the trigger time is in the past, schedule the alarm for the next occurrence of the selected days and time
+            val nextTrigger = calculateNextTriggerTime(selectedDaysList, timeInMillis)
+            triggerTime = nextTrigger ?: return // No valid trigger time found, return
+        }
+
+        // Set the alarm to repeat at the selected days and time
+        val intervalMillis = AlarmManager.INTERVAL_DAY
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime, intervalMillis, pendingIntent)
     }
+    private fun calculateNextTriggerTime(selectedDaysList: List<Int>, timeInMillis: Long): Long? {
+        val calendar = Calendar.getInstance()
+        val currentTime = System.currentTimeMillis()
 
-//    private fun scheduleNotification(delay: Long, data: Data) {
-//        val notificationWork = OneTimeWorkRequest.Builder(NotifyWork::class.java)
-//            .setInitialDelay(delay, MILLISECONDS).setInputData(data).build()
-//
-//        val instanceWorkManager = WorkManager.getInstance(appComponents.context())
-//        instanceWorkManager.beginUniqueWork(NOTIFICATION_WORK,
-//            ExistingWorkPolicy.REPLACE, notificationWork).enqueue()
-//    }
-    private fun scheduleNotification(delay: Long, selectedDaysList: List<Int>, data: Data) {
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
+        // Find the next occurrence of the selected days and time
+        while (calendar.timeInMillis <= currentTime + 7 * AlarmManager.INTERVAL_DAY) {
+            if (selectedDaysList.contains(calendar.get(Calendar.DAY_OF_WEEK) - 1)) {
+                // Set the time for the selected day
+                calendar.set(Calendar.HOUR_OF_DAY,
+                    (timeInMillis / (60 * 60 * 1000).toInt()).toInt()
+                )
+                calendar.set(Calendar.MINUTE, (timeInMillis % (60 * 60 * 1000) / (60 * 1000)).toInt())
+                calendar.set(Calendar.SECOND, 0)
+                calendar.set(Calendar.MILLISECOND, 0)
 
-        val notificationWork = PeriodicWorkRequestBuilder<NotifyWork>(1, TimeUnit.DAYS)
-            .setInitialDelay(delay, MILLISECONDS)
-            .setInputData(data)
-            .setConstraints(constraints)
-            .build()
-
-        val instanceWorkManager = WorkManager.getInstance(appComponents.context())
-        instanceWorkManager.enqueueUniquePeriodicWork(NOTIFICATION_WORK, ExistingPeriodicWorkPolicy.REPLACE, notificationWork)
-
-    val cancelWorkRequests = selectedDaysList.mapNotNull { day ->
-        val workTag = "$NOTIFICATION_WORK-$day"
-        instanceWorkManager.getWorkInfosByTag(workTag).get()
-            .firstOrNull { workInfo -> workInfo.state != WorkInfo.State.CANCELLED }
-            ?.id
+                if (calendar.timeInMillis > currentTime) {
+                    return calendar.timeInMillis
+                }
+            }
+            calendar.add(Calendar.DAY_OF_MONTH, 1) // Move to the next day
+        }
+        return null // No valid trigger time found within the next 7 days
     }
-
-    cancelWorkRequests.forEach { workId ->
-        instanceWorkManager.cancelWorkById(workId)
-    }
-    }
-
-
 
 
     fun selectInPageSecond() {
@@ -281,16 +299,6 @@ class NotificationFragment : Fragment() {
                         sunday = dayVs.toString(),
                         time = selectedTime
                     )
-                    val selectedDaysList = mutableListOf<Int>()
-                    if (dayPn.toString() == "1") selectedDaysList.add(0)
-                    if (dayVt.toString() == "1") selectedDaysList.add(1)
-                    if (daySr.toString() == "1") selectedDaysList.add(2)
-                    if (dayCht.toString() == "1") selectedDaysList.add(3)
-                    if (dayPt.toString() == "1") selectedDaysList.add(4)
-                    if (daySb.toString() == "1") selectedDaysList.add(5)
-                    if (dayVs.toString() == "1") selectedDaysList.add(6)
-
-                    selectedDays = selectedDaysList.toList()
 
                     // Получение выбранного времени
 
@@ -301,7 +309,12 @@ class NotificationFragment : Fragment() {
                     val minute = timeParts[1].toInt()
 
                     Log.d("TAG", "hour: $hour, minute: $minute")
-                    Log.d("TAG", "hour: ${customCalendar.get(Calendar.HOUR)}, minute: ${customCalendar.get(Calendar.MINUTE)}")
+                    Log.d(
+                        "TAG",
+                        "hour: ${customCalendar.get(Calendar.HOUR)}, minute: ${
+                            customCalendar.get(Calendar.MINUTE)
+                        }"
+                    )
                     customCalendar.set(
                         customCalendar.get(Calendar.YEAR), // Используем текущий год
                         customCalendar.get(Calendar.MONTH), // Используем текущий месяц
@@ -310,37 +323,26 @@ class NotificationFragment : Fragment() {
                         minute,
                         0
                     )
-                    val selectedDays = mutableListOf<Int>()
-                    if (dayPn.toString() == "1") selectedDays.add(Calendar.MONDAY)
-                    if (dayVt.toString() == "1") selectedDays.add(Calendar.TUESDAY)
-                    if (daySr.toString() == "1") selectedDays.add(Calendar.WEDNESDAY)
-                    if (dayCht.toString() == "1") selectedDays.add(Calendar.THURSDAY)
-                    if (dayPt.toString() == "1") selectedDays.add(Calendar.FRIDAY)
-                    if (daySb.toString() == "1") selectedDays.add(Calendar.SATURDAY)
-                    if (dayVs.toString() == "1") selectedDays.add(Calendar.SUNDAY)
-
 
 
                     val customTime = customCalendar.timeInMillis
-                    val currentTime = currentTimeMillis()
-                        val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
-                        val delay = customTime - currentTime
+                    val data = Data.Builder().putInt(NOTIFICATION_ID, 0).build()
 
-                    val DaysList = mutableListOf<Int>()
-                    DaysList.add(Calendar.MONDAY)
-                    DaysList.add(Calendar.TUESDAY)
-                    DaysList.add(Calendar.WEDNESDAY)
-                    DaysList.add(Calendar.THURSDAY)
-                    DaysList.add(Calendar.FRIDAY)
-                    DaysList.add(Calendar.SATURDAY)
-                    DaysList.add(Calendar.SUNDAY)
+                    val selectedDaysList = mutableListOf<Int>()
+                    if (dayPn.toString() == "1") selectedDaysList.add(Calendar.MONDAY)
+                    if (dayVt.toString() == "1") selectedDaysList.add(Calendar.TUESDAY)
+                    if (daySr.toString() == "1") selectedDaysList.add(Calendar.WEDNESDAY)
+                    if (dayCht.toString() == "1") selectedDaysList.add(Calendar.THURSDAY)
+                    if (dayPt.toString() == "1") selectedDaysList.add(Calendar.FRIDAY)
+                    if (daySb.toString() == "1") selectedDaysList.add(Calendar.SATURDAY)
+                    if (dayVs.toString() == "1") selectedDaysList.add(Calendar.SUNDAY)
 
-                    Log.d("TAG", "selected days: $selectedDays")
-                    Log.d("TAG", "DaysList: $DaysList")
+                    selectedDays = selectedDaysList.toList()
 
-//                    scheduleNotification(delay, data)
-                    scheduleNotification(delay, selectedDays,data)
+                    val currentTime = System.currentTimeMillis()
+                    val delay = customTime - currentTime
 
+                    scheduleNotification(selectedDays, customTime)
 
                     getViewModel().setNotification(shared.getToken(), dayRequest)
                     getViewModel().day.observe(viewLifecycleOwner) { observe ->
@@ -354,7 +356,6 @@ class NotificationFragment : Fragment() {
         })
 
     }
-
 
 
     override fun onResume() {
